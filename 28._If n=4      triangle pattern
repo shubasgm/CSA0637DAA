@@ -1,0 +1,17 @@
+#include <stdio.h>
+
+int main() {
+    int n = 4; // Set the value of n
+    int i, j;
+
+    // Iterate over rows
+    for(i = 1; i <= n; i++) {
+        // Iterate over columns
+        for(j = 1; j <= i; j++) {
+            printf("%d ", j); // Print the current column value
+        }
+        printf("\n"); // Move to the next line after completing a row
+    }
+
+    return 0;
+}

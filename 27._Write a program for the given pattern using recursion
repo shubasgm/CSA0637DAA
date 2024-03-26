@@ -1,0 +1,51 @@
+#include <stdio.h>
+
+// Function to print spaces
+void printSpaces(int n) {
+    if (n <= 0)
+        return;
+    printf(" ");
+    printSpaces(n - 1);
+}
+
+// Function to print stars
+void printStars(int n) {
+    if (n <= 0)
+        return;
+    printf("* ");
+    printStars(n - 1);
+}
+
+// Function to print a line of the triangle
+void printLine(int spaces, int stars) {
+    if (spaces <= 0 && stars <= 0)
+        return;
+    printSpaces(spaces);
+    printStars(stars);
+    printf("\n");
+    printLine(spaces - 1, stars + 2);
+}
+
+// Function to print the triangle pattern
+void printTriangle(int n) {
+    if (n <= 0)
+        return;
+    printTriangle(n - 1);
+    printLine(n - 1, (2 * (n - 1)) + 1);
+}
+
+int main() {
+    int rows;
+    printf("Enter the number of rows for the triangle: ");
+    scanf("%d", &rows);
+
+    if (rows <= 0) {
+        printf("Number of rows should be greater than 0.\n");
+        return 1;
+    }
+
+    printf("Triangle pattern:\n");
+    printTriangle(rows);
+
+    return 0;
+}

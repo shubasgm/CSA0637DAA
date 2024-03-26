@@ -1,0 +1,14 @@
+def min_max_sequence(numbers):
+    for num in numbers:
+        sequence = []
+        while num != 0:
+            sequence.append(num)
+            if num % 2 == 0:
+                num //= 2
+            else:
+                num = 3 * num + 1
+        print(f"Number: {sequence[0]}, Minimum: {min(sequence)}, Maximum: {max(sequence)}")
+
+# Example usage:
+numbers_list = [7, 10, 13, 20]
+min_max_sequence(numbers_list)

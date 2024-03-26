@@ -1,0 +1,24 @@
+#include <stdio.h>
+
+void find_factors(int n, int divisor, int factors[]) {
+    if (divisor > n)
+        return;
+    
+    if (n % divisor == 0) {
+        printf("%d ", divisor);
+        find_factors(n, divisor + 1, factors);
+    } else {
+        find_factors(n, divisor + 1, factors);
+    }
+}
+
+int main() {
+    int n;
+    printf("Enter a number to find its factors: ");
+    scanf("%d", &n);
+    
+    printf("Factors of %d are: ", n);
+    find_factors(n, 1, NULL);
+    
+    return 0;
+}

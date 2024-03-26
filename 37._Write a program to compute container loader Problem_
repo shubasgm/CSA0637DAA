@@ -1,0 +1,86 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_ITEMS 100
+#define MAX_BINS 100
+
+// Structure to represent an item
+typedef struct {
+    int id;
+    int size;
+} Item;
+
+// Structure to represent a bin
+typedef struct {
+    int id;
+    int remaining_capacity;
+} Bin;
+
+// Function prototypes
+void first_fit_decreasing(Item items[], int num_items, int bin_capacity);
+
+int main() {
+    int num_items, bin_capacity;
+    Item items[MAX_ITEMS];
+
+    printf("Enter the number of items: ");
+    scanf("%d", &num_items);
+
+    printf("Enter the capacity of each bin: ");
+    scanf("%d", &bin_capacity);
+
+    printf("Enter the size of each item:\n");
+    for (int i = 0; i < num_items; i++) {
+        printf("Item %d: ", i + 1);
+        scanf("%d", &items[i].size);
+        items[i].id = i + 1;
+    }
+
+    // Call the function to solve the problem
+    first_fit_decreasing(items, num_items, bin_capacity);
+
+    return 0;
+}
+
+// Function to implement the First Fit Decreasing algorithm
+void first_fit_decreasing(Item items[], int num_items, int bin_capacity) {
+    // Sort items by size in descending order
+    for (int i = 0; i < num_items - 1; i++) {
+        for (int j = i + 1; j < num_items; j++) {
+            if (items[i].size < items[j].size) {
+                // Swap items[i] and items[j]
+                Item temp = items[i];
+                items[i] = items[j];
+                items[j] = temp;
+            }
+        }
+    }
+
+    Bin bins[MAX_BINS];
+    int num_bins = 0;
+
+    // Initialize bins
+    bins[num_bins].id = num_bins + 1;
+    bins[num_bins].remaining_capacity = bin_capacity;
+    num_bins++;
+
+    // Pack items into bins
+    for (int i = 0; i < num_items; i++) {
+        int j;
+        for (j = 0; j < num_bins; j++) {
+            if (bins[j].remaining_capacity >= items[i].size) {
+                // Item fits into bin j
+                printf("Item %d fits into Bin %d\n", items[i].id, bins[j].id);
+                bins[j].remaining_capacity -= items[i].size;
+                break;
+            }
+        }
+        if (j == num_bins) {
+            // No existing bin can accommodate the item, so create a new bin
+            bins[num_bins].id = num_bins + 1;
+            bins[num_bins].remaining_capacity = bin_capacity - items[i].size;
+            printf("Item %d fits into new Bin %d\n", items[i].id, bins[num_bins].id);
+            num_bins++;
+        }
+    }
+}
